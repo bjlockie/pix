@@ -6,15 +6,15 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
-  Buttons, ComCtrls, FileUtil, LazFileUtils;
+  Buttons, FileUtil, LazFileUtils;
 
 type
 
   { TMainForm }
 
   TMainForm = class(TForm)
+    FileListBox: TListBox;
     SelectDirectoryDialog: TSelectDirectoryDialog;
-    TreeView_FileList: TTreeView;
     WhenBox: TEdit;
     WhoBox: TEdit;
     WhereBox: TEdit;
@@ -30,8 +30,6 @@ type
     procedure FileListBoxClick(Sender: TObject);
     procedure LoadPanelClick(Sender: TObject);
     procedure SavePanelClick(Sender: TObject);
-    procedure TreeView_FileListExpanded(Sender: TObject; Node: TTreeNode);
-    procedure TreeView_FileListSelectionChanged(Sender: TObject);
     procedure WhenBoxEnter(Sender: TObject);
     procedure WhereBoxEnter(Sender: TObject);
     procedure WhoBoxEnter(Sender: TObject);
@@ -54,52 +52,6 @@ implementation
 {$R *.lfm}
 
 { TMainForm }
-
-procedure TMainForm.TreeView_FileListExpanded(Sender: TObject; Node: TTreeNode);
-var
-    list : TStringList;
-    st, shortname   : String;
-
-    { update FileListBox with list of pictures }
-begin
-    list := FindAllFiles(fullpath, '*.jpg', false {don't search in subdirectory});
-    { strip full path off }
-    for st in list do
-    begin
-        shortname:=ExtractFileName(st);
-    end;
-
-   list.Free;
-end;
-
-procedure TMainForm.TreeView_FileListSelectionChanged(Sender: TObject);
-var
-  aNode   : TTreeNode;
-  fnamekey : Integer;
-begin
-  if Sender is TTreeView then //as the selectionchanged is raised from Treeview1 the
-                                               //sender will always be a TTreeView but in case
-                                               //of multiple treeviews attached to the same event this
-                                               //way you set the caption to the controls selected node that raised the event.
-     fname := TTreeView(Sender).Selected.Text;
-   else // not really going to happen ever but here is a no thrills stupid code that is closely coupled with treeview1 not recommended to be used.
-     fname := "";//
-
-  { long filename (including path) }
-  longfname:=AppendPathDelim(fullpath)+fname;
-
-  filelabel.Caption:=longfname;
-  picbox.Picture.LoadFromFile(longfname);
-  WhenBox.text:='';
-  Whobox.text:='';
-  WhereBox.text:='';
-  key:=copy(longfname,1,length(longfname)-4)+'.txt';
-  label1.caption:='['+key+']';
-  WhenBox.Visible :=true;
-  WhoBox.visible:=True;
-  Wherebox.visible:=true;
-  ShowComments(key);
- end;
 
 Procedure ShowComments(filename:string);
 var f : textfile;
@@ -139,60 +91,43 @@ var
 begin
   WhenBox.Visible :=false;
   SavePanel.visible:=false;
-
   if SelectDirectoryDialog.Execute then
   begin
     savepanel.visible:=false;
     fullpath:=copy(SelectDirectoryDialog.FileName,1,240);
-    shortname:=ExtractFileName(fullpath);
 
-    TreeView_FileList.Items.Clear;
+    { update FileListBox with list of pictures }
+    begin
+        shortlist:=TStringList.Create();
+        list := FindAllFiles(fullpath, '*.jpg', false {don't search in subdirectory});
+        { strip full path off }
+        for st in list do
+          begin
+            shortname:=ExtractFileName(st);
+            shortlist.Add( shortname );
+          end;
 
-    // populate TTreeView :
 
-    // init the tree - add a root node :
-    TreeView_FileList.TopItem:= TreeView_FileList.Items.Add( NIL, shortname );
-    TreeView_FileList.TopItem.HasChildren:= TRUE;
-//    TreeView_FileList.Images:= ImageList;
-
+        FileListBox.Items := shortlist;
+        list.Free;
+        shortlist.Free;
+    end;
   end;
 end;
 
 procedure TMainForm.FormActivate(Sender: TObject);
-var
-  st, shortname   : String;
-  list    : TStringList;
-  aNode   : TTreeNode;
-
-  begin
-  Mainform.Caption:='LPIX - by Wayne Lockie June 22, 2020';
-  SavePanel.visible:=false;
-
 begin
-      list := FindAllFiles(fullpath, '*.jpg', false {don't search in subdirectory});
-      { strip full path off }
-      for st in list do
-        begin
-          shortname:=ExtractFileName(st);
-
-          // add child nodes + expand tree :
-           aNode:= TreeView_FileList.Items.AddChild( TreeView_FileList.TopItem, shortname );
-           aNode.ImageIndex:= 0;
-           aNode.SelectedIndex:= 0;
-       end;
-
-      list.Free;
-  end;
+  Mainform.Caption:='LPIX v3 - by Wayne Lockie June 22, 2020';
+  SavePanel.visible:=false;
 end;
 
 procedure TMainForm.FileListBoxClick(Sender: TObject);
 var
-  aNode   : TTreeNode;
   fnamekey : Integer;
 begin
   { selected item, short filname (no path) }
-  fname:=TreeView_FileList.SelectedNode.Text;
-  anode:=TreeView_FileList.Items[fnamekey];
+  fnamekey:=FileListBox.ItemIndex;
+  fname:=FileListBox.Items[fnamekey];
 
   { long filename (including path) }
   longfname:=AppendPathDelim(fullpath)+fname;
@@ -217,7 +152,6 @@ begin
   SaveEdits(key);
   SavePanel.visible:=false;
 end;
-
 
 procedure TMainForm.WhenBoxEnter(Sender: TObject);
 begin
