@@ -214,15 +214,22 @@ object MainForm: TMainForm
     Transparent = False
     WordWrap = True
   end
-  object TreeView_FileList: TTreeView
-    Left = 8
-    Height = 528
-    Top = 56
-    Width = 224
-    TabOrder = 5
+  object FileListBox: TListBox
+    Left = -6
+    Height = 527
+    Top = 44
+    Width = 244
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -9
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    Font.Style = [fsBold, fsItalic]
+    ItemHeight = 0
     OnClick = FileListBoxClick
-    OnExpanded = TreeView_FileListExpanded
-    OnSelectionChanged = TreeView_FileListSelectionChanged
+    ParentFont = False
+    TabOrder = 5
   end
   object SelectDirectoryDialog: TSelectDirectoryDialog
     FileName = '/'
