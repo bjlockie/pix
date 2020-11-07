@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
-  Buttons, FileUtil, LazFileUtils;
+  Buttons, FileUtil, LazFileUtils, StrUtils;
 
 type
 
@@ -99,6 +99,15 @@ begin
     { update FileListBox with list of pictures }
     begin
         shortlist:=TStringList.Create();
+        list := FindAllDirectories(fullpath, false {don't search in subdirectory});
+        { strip full path off and add "(DIR) " }
+        for st in list do
+          begin
+            shortname:=ExtractFileName(st);
+            shortname:='(DIR) '+shortname;
+            shortlist.Add( shortname );
+          end;
+
         list := FindAllFiles(fullpath, '*.jpg', false {don't search in subdirectory});
         { strip full path off }
         for st in list do
@@ -106,7 +115,6 @@ begin
             shortname:=ExtractFileName(st);
             shortlist.Add( shortname );
           end;
-
 
         FileListBox.Items := shortlist;
         list.Free;
@@ -117,7 +125,7 @@ end;
 
 procedure TMainForm.FormActivate(Sender: TObject);
 begin
-  Mainform.Caption:='LPIX v3 - by Wayne Lockie June 22, 2020';
+  Mainform.Caption:='LPIX v4 - by Wayne Lockie Nov 7, 2020';
   SavePanel.visible:=false;
 end;
 
@@ -133,16 +141,25 @@ begin
   longfname:=AppendPathDelim(fullpath)+fname;
 
   filelabel.Caption:=longfname;
-  picbox.Picture.LoadFromFile(longfname);
-  WhenBox.text:='';
-  Whobox.text:='';
-  WhereBox.text:='';
-  key:=copy(longfname,1,length(longfname)-4)+'.txt';
-  label1.caption:='['+key+']';
-  WhenBox.Visible :=true;
-  WhoBox.visible:=True;
-  Wherebox.visible:=true;
-  ShowComments(key);
+
+  if AnsiStartsStr( '(DIR) ', fname ) then
+  begin
+      { a directory has been selected }
+      ChDir( longfname );
+  end
+  else
+  begin
+      picbox.Picture.LoadFromFile(longfname);
+      WhenBox.text:='';
+      Whobox.text:='';
+      WhereBox.text:='';
+      key:=copy(longfname,1,length(longfname)-4)+'.txt';
+      label1.caption:='['+key+']';
+      WhenBox.Visible :=true;
+      WhoBox.visible:=True;
+      Wherebox.visible:=true;
+      ShowComments(key);
+  end;
 end;
 
 
