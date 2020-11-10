@@ -72,28 +72,9 @@ object MainForm: TMainForm
     Font.Style = [fsBold]
     OnEnter = WhenBoxEnter
     ParentFont = False
-    TabOrder = 1
+    TabOrder = 0
     Text = 'WhenBox'
     Visible = False
-  end
-  object LoadPanel: TPanel
-    Left = 8
-    Height = 23
-    Top = 8
-    Width = 120
-    Caption = 'Select Folder'
-    Color = 16382372
-    Font.CharSet = ANSI_CHARSET
-    Font.Color = clBlack
-    Font.Height = -15
-    Font.Name = 'Segoe UI'
-    Font.Pitch = fpVariable
-    Font.Quality = fqDraft
-    Font.Style = [fsBold]
-    ParentColor = False
-    ParentFont = False
-    TabOrder = 0
-    OnClick = LoadPanelClick
   end
   object SavePanel: TPanel
     Left = 844
@@ -111,7 +92,7 @@ object MainForm: TMainForm
     Font.Style = [fsBold]
     ParentColor = False
     ParentFont = False
-    TabOrder = 2
+    TabOrder = 1
     OnClick = SavePanelClick
   end
   object WhoBox: TEdit
@@ -129,7 +110,7 @@ object MainForm: TMainForm
     Font.Style = [fsBold]
     OnEnter = WhoBoxEnter
     ParentFont = False
-    TabOrder = 3
+    TabOrder = 2
     Text = 'WhoBox'
     Visible = False
   end
@@ -149,7 +130,7 @@ object MainForm: TMainForm
     Font.Style = [fsBold]
     OnEnter = WhereBoxEnter
     ParentFont = False
-    TabOrder = 4
+    TabOrder = 3
     Text = 'WhereBox'
     Visible = False
   end
@@ -229,13 +210,6 @@ object MainForm: TMainForm
     ItemHeight = 0
     OnClick = FileListBoxClick
     ParentFont = False
-    TabOrder = 5
-  end
-  object SelectDirectoryDialog: TSelectDirectoryDialog
-    FileName = '/'
-    InitialDir = '/'
-    Options = [ofPathMustExist, ofEnableSizing, ofViewDetail, ofAutoPreview]
-    left = 165
-    top = 8
+    TabOrder = 4
   end
 end

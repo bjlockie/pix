@@ -14,7 +14,6 @@ type
 
   TMainForm = class(TForm)
     FileListBox: TListBox;
-    SelectDirectoryDialog: TSelectDirectoryDialog;
     WhenBox: TEdit;
     WhoBox: TEdit;
     WhereBox: TEdit;
@@ -22,13 +21,11 @@ type
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
-    LoadPanel: TPanel;
     SavePanel: TPanel;
     PicBox: TImage;
     FileLabel: TLabel;
     procedure FormActivate(Sender: TObject);
     procedure FileListBoxClick(Sender: TObject);
-    procedure LoadPanelClick(Sender: TObject);
     procedure SavePanelClick(Sender: TObject);
     procedure WhenBoxEnter(Sender: TObject);
     procedure WhereBoxEnter(Sender: TObject);
@@ -84,82 +81,114 @@ begin
   close(f);
 end;
 
-procedure TMainForm.LoadPanelClick(Sender: TObject);
+
+{ update FileListBox with directory list of current directory }
+Procedure ListDirectory();
 var
-    list, shortlist : TStringList;
-    st, shortname   : String;
+    list, flist, dirlist : TStringList;
+    st, shortname        : String;
 begin
-  WhenBox.Visible :=false;
-  SavePanel.visible:=false;
-  if SelectDirectoryDialog.Execute then
-  begin
-    savepanel.visible:=false;
-    fullpath:=copy(SelectDirectoryDialog.FileName,1,240);
+    fullpath:=GetCurrentDir();
 
-    { update FileListBox with list of pictures }
+    dirlist:=TStringList.Create();
+    list := FindAllDirectories(fullpath, false {don't search in subdirectory});
+    { strip full path off and prepend "(DIR) " }
+    for st in list do
     begin
-        shortlist:=TStringList.Create();
-        list := FindAllDirectories(fullpath, false {don't search in subdirectory});
-        { strip full path off and add "(DIR) " }
-        for st in list do
-          begin
-            shortname:=ExtractFileName(st);
-            shortname:='(DIR) '+shortname;
-            shortlist.Add( shortname );
-          end;
-
-        list := FindAllFiles(fullpath, '*.jpg', false {don't search in subdirectory});
-        { strip full path off }
-        for st in list do
-          begin
-            shortname:=ExtractFileName(st);
-            shortlist.Add( shortname );
-          end;
-
-        FileListBox.Items := shortlist;
-        list.Free;
-        shortlist.Free;
+        shortname:=ExtractFileName(st);
+        shortname:='(DIR) '+shortname;
+        dirlist.Add( shortname );
     end;
-  end;
+    list.Free;
+    dirlist.Sort;
+
+    { prepend PARENT (..) to list of directories }
+    dirlist.Insert( 0, 'PARENT (..)' );
+
+    flist:=TStringList.Create();
+    list := FindAllFiles(fullpath, '*.jpg', false {don't search in subdirectory});
+    { strip full path off }
+    for st in list do
+    begin
+        shortname:=ExtractFileName(st);
+        flist.Add( shortname );
+    end;
+    list.Free;
+    flist.Sort;
+
+    for st in flist do
+    begin
+        dirlist.Add( st )
+    end;
+    flist.Free;
+
+    mainform.FileListBox.Items := dirlist;
+    dirlist.Free;
+
+    { update the filelabel }
+    mainform.filelabel.Caption:=longfname;
 end;
 
 procedure TMainForm.FormActivate(Sender: TObject);
 begin
-  Mainform.Caption:='LPIX v4 - by Wayne Lockie Nov 7, 2020';
+  Mainform.Caption:='LPIX v4 - by Wayne Lockie Nov 9, 2020';
   SavePanel.visible:=false;
+  ListDirectory();
 end;
 
 procedure TMainForm.FileListBoxClick(Sender: TObject);
 var
-  fnamekey : Integer;
+  fnamekey      : Integer;
+  parentDirPath : String;
 begin
-  { selected item, short filname (no path) }
-  fnamekey:=FileListBox.ItemIndex;
-  fname:=FileListBox.Items[fnamekey];
+    { selected item, short filname (no path) }
+    fnamekey:=FileListBox.ItemIndex;
+    if fnamekey > -1 then
+    begin
+        fname:=FileListBox.Items[fnamekey];
 
-  { long filename (including path) }
-  longfname:=AppendPathDelim(fullpath)+fname;
+        fullpath:=GetCurrentDir();
 
-  filelabel.Caption:=longfname;
+        if AnsiStartsStr( 'PARENT (..)', fname ) then
+        begin
+            parentDirPath := ExtractFilePath(ExcludeTrailingPathDelimiter(fullpath));
+            { change to parent directory }
+            ChDir( parentDirPath );
 
-  if AnsiStartsStr( '(DIR) ', fname ) then
-  begin
-      { a directory has been selected }
-      ChDir( longfname );
-  end
-  else
-  begin
-      picbox.Picture.LoadFromFile(longfname);
-      WhenBox.text:='';
-      Whobox.text:='';
-      WhereBox.text:='';
-      key:=copy(longfname,1,length(longfname)-4)+'.txt';
-      label1.caption:='['+key+']';
-      WhenBox.Visible :=true;
-      WhoBox.visible:=True;
-      Wherebox.visible:=true;
-      ShowComments(key);
-  end;
+            ListDirectory();
+        end
+        else if AnsiStartsStr( '(DIR) ', fname ) then
+        begin
+            { remove "(DIR) " from fname }
+            fname:=RightStr(fname,Length(fname)-6);
+
+            { long filename (including path) }
+            longfname:=AppendPathDelim(fullpath)+fname;
+
+            { a directory has been selected }
+            ChDir( longfname );
+
+            ListDirectory();
+        end
+        else
+        begin
+            { long filename (including path) }
+            longfname:=AppendPathDelim(fullpath)+fname;
+
+            filelabel.Caption:=longfname;
+
+            picbox.Picture.LoadFromFile(longfname);
+            WhenBox.text:='';
+            Whobox.text:='';
+            WhereBox.text:='';
+            key:=copy(longfname,1,length(longfname)-4)+'.txt';
+            label1.caption:='['+key+']';
+            WhenBox.Visible :=true;
+            WhoBox.visible:=True;
+            Wherebox.visible:=true;
+            ShowComments(key);
+        end;
+    end;
 end;
 
 
