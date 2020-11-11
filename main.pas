@@ -126,7 +126,7 @@ begin
     dirlist.Free;
 
     { update the filelabel }
-    mainform.filelabel.Caption:=longfname;
+    mainform.filelabel.Caption:=fullpath;
 end;
 
 procedure TMainForm.FormActivate(Sender: TObject);
