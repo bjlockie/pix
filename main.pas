@@ -6,27 +6,32 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
-  Buttons, FileUtil, LazFileUtils, StrUtils;
+  Buttons, FileUtil, LazFileUtils, StrUtils, LCLType;
 
 type
 
   { TMainForm }
 
   TMainForm = class(TForm)
+    DisplayPanel: TPanel;
+    SaveButton: TButton;
     FileListBox: TListBox;
     WhenBox: TEdit;
     WhoBox: TEdit;
     WhereBox: TEdit;
-    Label1: TLabel;
-    Label2: TLabel;
-    Label3: TLabel;
-    Label4: TLabel;
-    SavePanel: TPanel;
+    FileDataNameLabel: TLabel;
+    WhenLabel: TLabel;
+    WhoLabel: TLabel;
+    WhereLabel: TLabel;
     PicBox: TImage;
     FileLabel: TLabel;
+    procedure FileDataNameLabelClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FileListBoxClick(Sender: TObject);
-    procedure SavePanelClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure SaveButtonClick(Sender: TObject);
+    procedure WhenLabelClick(Sender: TObject);
+    procedure DisplayPanelClick(Sender: TObject);
     procedure WhenBoxEnter(Sender: TObject);
     procedure WhereBoxEnter(Sender: TObject);
     procedure WhoBoxEnter(Sender: TObject);
@@ -131,16 +136,36 @@ end;
 
 procedure TMainForm.FormActivate(Sender: TObject);
 begin
-  Mainform.Caption:='LPIX v4 - by Wayne Lockie Nov 9, 2020';
-  SavePanel.visible:=false;
+  Mainform.Caption:='LPIX v5 - by Wayne Lockie Nov 13, 2020';
+  SaveButton.visible:=false;
+  FileLabel.visible:=false;
+  FileDataNameLabel.visible:=false;
   ListDirectory();
+end;
+
+procedure TMainForm.FileDataNameLabelClick(Sender: TObject);
+begin
+
 end;
 
 procedure TMainForm.FileListBoxClick(Sender: TObject);
 var
-  fnamekey      : Integer;
-  parentDirPath : String;
+  fnamekey        : Integer;
+  parentDirPath   : String;
+  Reply, BoxStyle : Integer;
 begin
+    if SaveButton.visible=true then
+    begin
+         { maybe changes have been made }
+         BoxStyle := MB_ICONQUESTION + MB_YESNO;
+         Reply := Application.MessageBox('Save changes and continue?"', 'MessageBoxDemo', BoxStyle);
+         if Reply = IDYES then
+         begin
+              SaveEdits(key);
+              SaveButton.visible:=false;
+         end;
+    end;
+
     { selected item, short filname (no path) }
     fnamekey:=FileListBox.ItemIndex;
     if fnamekey > -1 then
@@ -175,14 +200,14 @@ begin
             { long filename (including path) }
             longfname:=AppendPathDelim(fullpath)+fname;
 
-            filelabel.Caption:=longfname;
+            FileDataNameLabel.Caption:=longfname;
 
             picbox.Picture.LoadFromFile(longfname);
             WhenBox.text:='';
             Whobox.text:='';
             WhereBox.text:='';
             key:=copy(longfname,1,length(longfname)-4)+'.txt';
-            label1.caption:='['+key+']';
+            FileDataNameLabel.caption:='['+key+']';
             WhenBox.Visible :=true;
             WhoBox.visible:=True;
             Wherebox.visible:=true;
@@ -191,29 +216,42 @@ begin
     end;
 end;
 
-
-procedure TMainForm.SavePanelClick(Sender: TObject);
-(* Save edited comments *)
+procedure TMainForm.FormCreate(Sender: TObject);
 begin
-  SaveEdits(key);
-  SavePanel.visible:=false;
+
+end;
+
+procedure TMainForm.WhenLabelClick(Sender: TObject);
+begin
+
+end;
+
+procedure TMainForm.DisplayPanelClick(Sender: TObject);
+begin
+
 end;
 
 procedure TMainForm.WhenBoxEnter(Sender: TObject);
 begin
-  SavePanel.visible:=true;
+  SaveButton.visible:=true;
 end;
 
 procedure TMainForm.WhereBoxEnter(Sender: TObject);
 begin
-  SavePanel.visible:=true;
+  SaveButton.visible:=true;
 end;
 
 procedure TMainForm.WhoBoxEnter(Sender: TObject);
 begin
-  SavePanel.visible:=true;
+  SaveButton.visible:=true;
 end;
 
+procedure TMainForm.SaveButtonClick(Sender: TObject);
+(* Save edited comments *)
+begin
+  SaveEdits(key);
+  SaveButton.visible:=false;
+end;
 
 
 end.
