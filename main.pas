@@ -25,13 +25,9 @@ type
     WhereLabel: TLabel;
     PicBox: TImage;
     FileLabel: TLabel;
-    procedure FileDataNameLabelClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FileListBoxClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
     procedure SaveButtonClick(Sender: TObject);
-    procedure WhenLabelClick(Sender: TObject);
-    procedure DisplayPanelClick(Sender: TObject);
     procedure WhenBoxEnter(Sender: TObject);
     procedure WhereBoxEnter(Sender: TObject);
     procedure WhoBoxEnter(Sender: TObject);
@@ -131,22 +127,15 @@ begin
     dirlist.Free;
 
     { update the filelabel }
-    mainform.filelabel.Caption:=fullpath;
+    MainForm.FileLabel.Caption:=fullpath;
 end;
 
 procedure TMainForm.FormActivate(Sender: TObject);
 begin
-  Mainform.Caption:='LPIX v5 - by Wayne Lockie Nov 13, 2020';
-  SaveButton.visible:=false;
-  FileLabel.visible:=false;
-  FileDataNameLabel.visible:=false;
+  Mainform.Caption:='LPIX v5.1 - by Wayne Lockie Nov 17, 2020';
   ListDirectory();
 end;
 
-procedure TMainForm.FileDataNameLabelClick(Sender: TObject);
-begin
-
-end;
 
 procedure TMainForm.FileListBoxClick(Sender: TObject);
 var
@@ -156,14 +145,14 @@ var
 begin
     if SaveButton.visible=true then
     begin
-         { maybe changes have been made }
-         BoxStyle := MB_ICONQUESTION + MB_YESNO;
-         Reply := Application.MessageBox('Save changes and continue?"', 'MessageBoxDemo', BoxStyle);
-         if Reply = IDYES then
-         begin
-              SaveEdits(key);
-              SaveButton.visible:=false;
-         end;
+        { maybe changes have been made }
+        BoxStyle := MB_ICONQUESTION + MB_YESNO;
+        Reply := Application.MessageBox('Save changes?                ', 'Save changes', BoxStyle);
+        if Reply = IDYES then
+        begin
+             SaveEdits(key);
+        end;
+        SaveButton.visible:=false;
     end;
 
     { selected item, short filname (no path) }
@@ -208,27 +197,17 @@ begin
             WhereBox.text:='';
             key:=copy(longfname,1,length(longfname)-4)+'.txt';
             FileDataNameLabel.caption:='['+key+']';
-            WhenBox.Visible :=true;
+            WhenBox.Visible:=True;
+            WhenLabel.Visible :=True;
             WhoBox.visible:=True;
-            Wherebox.visible:=true;
+            WhoLabel.Visible:=True;
+            WhereBox.Visible:=True;
+            WhereBox.Visible:=True;
+            WhereLabel.Visible:=True;
+
             ShowComments(key);
         end;
     end;
-end;
-
-procedure TMainForm.FormCreate(Sender: TObject);
-begin
-
-end;
-
-procedure TMainForm.WhenLabelClick(Sender: TObject);
-begin
-
-end;
-
-procedure TMainForm.DisplayPanelClick(Sender: TObject);
-begin
-
 end;
 
 procedure TMainForm.WhenBoxEnter(Sender: TObject);
