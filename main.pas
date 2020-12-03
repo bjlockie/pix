@@ -65,7 +65,7 @@ Procedure TMainForm.ShowEditBoxes();
 begin
     WhenBox.Visible:=True;
     WhenLabel.Visible:=True;
-    WhoBox.visible:=True;
+    WhoBox.Visible:=True;
     WhoLabel.Visible:=True;
     WhereBox.Visible:=True;
     WhereLabel.Visible:=True;
@@ -76,7 +76,7 @@ Procedure TMainForm.HideEditBoxes();
 begin
     WhenBox.Visible:=False;
     WhenLabel.Visible:=False;
-    WhoBox.visible:=False;
+    WhoBox.Visible:=False;
     WhoLabel.Visible:=False;
     WhereBox.Visible:=False;
     WhereLabel.Visible:=False;
@@ -222,7 +222,7 @@ end;
 
 procedure TMainForm.FormActivate(Sender: TObject);
 begin
-  Mainform.Caption:='LPIX v5.5 - by Wayne Lockie Nov 22, 2020 (https://github.com/bjlockie/pix)';
+  Mainform.Caption:='LPIX v5.6 - by Wayne Lockie Nov 22, 2020 (https://github.com/bjlockie/pix)';
   ListDirectory();
 end;
 
@@ -249,11 +249,15 @@ begin
         if Reply = IDYES then
         begin
             SaveEdits(key);
+        end
+        else
+        begin
+            ShowComments(key);
         end;
     end;
 
-    HideEditBoxes();
     SaveButton.visible:=False;
+    CancelButton.visible:=False;
 
     { selected item, short filname (no path) }
     fnamekey:=FileListBox.ItemIndex;
@@ -277,6 +281,8 @@ begin
                 {$ifdef Windows}
                 ChangeDir(fname);
                 ListDirectory();
+                { hide all the edit boxes }
+                HideEditBoxes();
                 {$endif}
             end
             else if AnsiStartsStr( 'PARENT (..)', fname ) then
@@ -286,6 +292,9 @@ begin
                 ChangeDir( parentDirPath );
 
                 ListDirectory();
+
+                { hide all the edit boxes }
+                HideEditBoxes();
             end
             else if AnsiStartsStr( '(DIR) ', fname ) then
             begin
@@ -299,6 +308,9 @@ begin
                 ChangeDir( longfname );
 
                 ListDirectory();
+
+                { hide all the edit boxes }
+                HideEditBoxes();
             end
             else
             begin
@@ -348,7 +360,6 @@ procedure TMainForm.SaveButtonClick(Sender: TObject);
 (* Save edited comments *)
 begin
     SaveEdits(key);
-    HideEditBoxes();
     SaveButton.Visible:=False;
     CancelButton.Visible:=False;
 end;
@@ -356,7 +367,6 @@ end;
 procedure TMainForm.CancelButtonClick(Sender: TObject);
 (* cancel edited comments *)
 begin
-    HideEditBoxes();
     SaveButton.Visible:=False;
     CancelButton.Visible:=False;
 end;

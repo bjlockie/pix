@@ -1,16 +1,15 @@
 object MainForm: TMainForm
   Left = 517
-  Height = 358
+  Height = 458
   Top = 173
-  Width = 412
+  Width = 527
   Caption = 'PIX'
-  ClientHeight = 358
-  ClientWidth = 412
+  ClientHeight = 458
+  ClientWidth = 527
   Color = clMoneyGreen
-  DesignTimePPI = 75
   Font.CharSet = ANSI_CHARSET
   Font.Color = clBlack
-  Font.Height = -9
+  Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Pitch = fpVariable
   Font.Quality = fqDraft
@@ -19,28 +18,28 @@ object MainForm: TMainForm
   LCLVersion = '2.0.6.0'
   object PairSplitter1: TPairSplitter
     Left = 0
-    Height = 349
+    Height = 447
     Top = 1
-    Width = 410
+    Width = 524
     Anchors = [akTop, akLeft, akRight, akBottom]
-    Position = 138
+    Position = 177
     object PairSplitterSide1: TPairSplitterSide
       Cursor = crArrow
       Left = 0
-      Height = 349
+      Height = 447
       Top = 0
-      Width = 138
-      ClientWidth = 138
-      ClientHeight = 349
+      Width = 177
+      ClientWidth = 177
+      ClientHeight = 447
       object FileListBox: TListBox
         Left = 0
-        Height = 349
+        Height = 447
         Top = 0
-        Width = 138
+        Width = 177
         Anchors = [akTop, akLeft, akRight, akBottom]
         Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
-        Font.Height = -9
+        Font.Height = -12
         Font.Name = 'Segoe UI'
         Font.Pitch = fpVariable
         Font.Quality = fqDraft
@@ -48,29 +47,31 @@ object MainForm: TMainForm
         ItemHeight = 0
         OnClick = FileListBoxClick
         ParentFont = False
+        ScrollWidth = 173
         TabOrder = 0
+        TopIndex = -1
       end
     end
     object PairSplitterSide2: TPairSplitterSide
       Cursor = crArrow
-      Left = 141
-      Height = 349
+      Left = 182
+      Height = 447
       Top = 0
-      Width = 269
-      ClientWidth = 269
-      ClientHeight = 349
+      Width = 342
+      ClientWidth = 342
+      ClientHeight = 447
       object Panel1: TPanel
         Left = 0
-        Height = 349
+        Height = 447
         Top = 0
-        Width = 269
+        Width = 342
         Anchors = [akTop, akLeft, akRight, akBottom]
         Caption = 'Panel1'
-        ClientHeight = 349
-        ClientWidth = 269
+        ClientHeight = 447
+        ClientWidth = 342
         Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
-        Font.Height = -9
+        Font.Height = -12
         Font.Name = 'Segoe UI'
         Font.Pitch = fpVariable
         Font.Quality = fqDraft
@@ -79,15 +80,15 @@ object MainForm: TMainForm
         TabOrder = 0
         object FileNameDataLabel: TLabel
           Left = 1
-          Height = 12
-          Top = 228
-          Width = 269
+          Height = 15
+          Top = 292
+          Width = 342
           Anchors = [akLeft, akRight, akBottom]
           AutoSize = False
           Color = clDefault
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -12
           Font.Name = 'Segoe UI'
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
@@ -95,17 +96,18 @@ object MainForm: TMainForm
           ParentColor = False
           ParentFont = False
           Transparent = False
+          Visible = False
         end
         object WhoBox: TEdit
-          Left = 55
-          Height = 34
-          Top = 279
-          Width = 176
+          Left = 70
+          Height = 44
+          Top = 357
+          Width = 223
           Anchors = [akLeft, akRight, akBottom]
           AutoSize = False
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -12
           Font.Name = 'Segoe UI'
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
@@ -113,20 +115,19 @@ object MainForm: TMainForm
           OnEnter = WhoBoxEnter
           ParentFont = False
           TabOrder = 0
-          Text = 'WhoBox'
           Visible = False
         end
         object WhereBox: TEdit
-          Left = 55
-          Height = 34
-          Top = 316
-          Width = 176
+          Left = 70
+          Height = 44
+          Top = 404
+          Width = 223
           Anchors = [akLeft, akRight, akBottom]
           AutoSize = False
           Color = 15662776
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -12
           Font.Name = 'Segoe UI'
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
@@ -134,14 +135,13 @@ object MainForm: TMainForm
           OnEnter = WhereBoxEnter
           ParentFont = False
           TabOrder = 1
-          Text = 'WhereBox'
           Visible = False
         end
         object WhoLabel: TLabel
           Left = 1
-          Height = 34
-          Top = 279
-          Width = 52
+          Height = 44
+          Top = 357
+          Width = 67
           Alignment = taCenter
           Anchors = [akLeft, akBottom]
           AutoSize = False
@@ -149,7 +149,7 @@ object MainForm: TMainForm
           Color = clWhite
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -12
           Font.Name = 'Segoe UI'
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
@@ -163,9 +163,9 @@ object MainForm: TMainForm
         end
         object WhereLabel: TLabel
           Left = 1
-          Height = 34
-          Top = 316
-          Width = 52
+          Height = 44
+          Top = 404
+          Width = 67
           Alignment = taCenter
           Anchors = [akLeft, akBottom]
           AutoSize = False
@@ -173,7 +173,7 @@ object MainForm: TMainForm
           Color = 15662776
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -12
           Font.Name = 'Segoe UI'
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
@@ -187,15 +187,15 @@ object MainForm: TMainForm
         end
         object DisplayPanel: TPanel
           Left = 1
-          Height = 216
-          Top = 11
-          Width = 269
+          Height = 277
+          Top = 14
+          Width = 342
           Anchors = [akTop, akLeft, akRight, akBottom]
-          ClientHeight = 216
-          ClientWidth = 269
+          ClientHeight = 277
+          ClientWidth = 342
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -12
           Font.Name = 'Segoe UI'
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
@@ -204,24 +204,24 @@ object MainForm: TMainForm
           TabOrder = 2
           object PicBox: TImage
             Left = 1
-            Height = 214
+            Height = 275
             Top = 1
-            Width = 267
+            Width = 340
             Anchors = [akTop, akLeft, akRight, akBottom]
             Proportional = True
           end
         end
         object SaveButton: TButton
-          Left = 231
-          Height = 48
-          Top = 243
-          Width = 40
+          Left = 294
+          Height = 61
+          Top = 312
+          Width = 51
           Anchors = [akRight, akBottom]
           Caption = 'Save'
           Color = clGreen
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -12
           Font.Name = 'Segoe UI'
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
@@ -233,9 +233,9 @@ object MainForm: TMainForm
         end
         object WhenLabel: TLabel
           Left = 1
-          Height = 34
-          Top = 243
-          Width = 52
+          Height = 44
+          Top = 311
+          Width = 67
           Alignment = taCenter
           Anchors = [akLeft, akBottom]
           AutoSize = False
@@ -243,7 +243,7 @@ object MainForm: TMainForm
           Color = 8454143
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -12
           Font.Name = 'Segoe UI'
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
@@ -256,16 +256,16 @@ object MainForm: TMainForm
           WordWrap = True
         end
         object WhenBox: TEdit
-          Left = 55
-          Height = 34
-          Top = 243
-          Width = 176
+          Left = 70
+          Height = 44
+          Top = 311
+          Width = 223
           Anchors = [akLeft, akRight, akBottom]
           AutoSize = False
           Color = 8454143
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -12
           Font.Name = 'Segoe UI'
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
@@ -273,20 +273,19 @@ object MainForm: TMainForm
           OnEnter = WhenBoxEnter
           ParentFont = False
           TabOrder = 4
-          Text = 'WhenBox'
           Visible = False
         end
         object FileNameLabel: TLabel
-          Left = 1
-          Height = 12
+          Left = 3
+          Height = 15
           Top = 1
-          Width = 269
+          Width = 342
           Anchors = [akTop, akLeft, akRight]
           AutoSize = False
           Color = clLime
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -12
           Font.Name = 'Segoe UI'
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
@@ -296,16 +295,16 @@ object MainForm: TMainForm
           Transparent = False
         end
         object CancelButton: TButton
-          Left = 230
-          Height = 48
-          Top = 301
-          Width = 40
+          Left = 292
+          Height = 61
+          Top = 386
+          Width = 51
           Anchors = [akRight, akBottom]
           Caption = 'Cancel'
           Color = clGreen
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
-          Font.Height = -9
+          Font.Height = -12
           Font.Name = 'Segoe UI'
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
