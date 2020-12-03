@@ -5,8 +5,11 @@ unit Main;
 interface
 
 uses
+{$ifdef Windows}
+ Windows,
+{$endif}
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
-  Buttons, FileUtil, LazFileUtils, StrUtils, LCLType;
+  Buttons, FileUtil, LazFileUtils, StrUtils, LCLType, PairSplitter;
 
 type
 
@@ -14,20 +17,28 @@ type
 
   TMainForm = class(TForm)
     DisplayPanel: TPanel;
-    SaveButton: TButton;
     FileListBox: TListBox;
-    WhenBox: TEdit;
-    WhoBox: TEdit;
-    WhereBox: TEdit;
-    FileDataNameLabel: TLabel;
-    WhenLabel: TLabel;
-    WhoLabel: TLabel;
-    WhereLabel: TLabel;
+    FileNameDataLabel: TLabel;
+    FileNameLabel: TLabel;
+    PairSplitter1: TPairSplitter;
+    PairSplitterSide1: TPairSplitterSide;
+    PairSplitterSide2: TPairSplitterSide;
+    Panel1: TPanel;
     PicBox: TImage;
-    FileLabel: TLabel;
+    SaveButton: TButton;
+    CancelButton: TButton;
+    WhenBox: TEdit;
+    WhenLabel: TLabel;
+    WhereBox: TEdit;
+    WhereLabel: TLabel;
+    WhoBox: TEdit;
+    WhoLabel: TLabel;
+    procedure ShowEditBoxes();
+    procedure HideEditBoxes();
     procedure FormActivate(Sender: TObject);
     procedure FileListBoxClick(Sender: TObject);
     procedure SaveButtonClick(Sender: TObject);
+    procedure CancelButtonClick(Sender: TObject);
     procedure WhenBoxEnter(Sender: TObject);
     procedure WhereBoxEnter(Sender: TObject);
     procedure WhoBoxEnter(Sender: TObject);
@@ -50,6 +61,27 @@ implementation
 {$R *.lfm}
 
 { TMainForm }
+Procedure TMainForm.ShowEditBoxes();
+begin
+    WhenBox.Visible:=True;
+    WhenLabel.Visible:=True;
+    WhoBox.visible:=True;
+    WhoLabel.Visible:=True;
+    WhereBox.Visible:=True;
+    WhereLabel.Visible:=True;
+    FileNameDataLabel.Visible:=True;
+end;
+
+Procedure TMainForm.HideEditBoxes();
+begin
+    WhenBox.Visible:=False;
+    WhenLabel.Visible:=False;
+    WhoBox.visible:=False;
+    WhoLabel.Visible:=False;
+    WhereBox.Visible:=False;
+    WhereLabel.Visible:=False;
+    FileNameDataLabel.Visible:=False;
+end;
 
 Procedure ShowComments(filename:string);
 var f : textfile;
@@ -82,60 +114,126 @@ begin
   close(f);
 end;
 
+function GetBit(Value: QWord; Index: Byte): Boolean;
+begin
+  Result := ((Value shr Index) and 1) = 1;
+end;
+
+function WindowsDriveType( dt : UINT ): String;
+begin
+    case dt of
+        0: Result:='Unknown';
+        1: Result:='Invalid';
+        2: Result:='Removbl';
+        3: Result:='Fixed';
+        4: Result:='Network';
+        5: Result:='CD-ROM';
+        6: Result:='RAMDISK';
+    end;
+end;
+
+function GetDriveLetters(): TStringList;
+{$ifdef Windows}
+var dword     : QWord;
+    letter    : Char;
+    i         : Byte = 0;
+    shortname : String;
+    dr        : Packed array[0..3] of char;
+    dt        : UINT;
+{$endif}
+begin
+    Result:=TStringList.Create();
+    {$ifdef Windows}
+        ZeroMemory(@dr, sizeof(dr));
+        lstrcpy(dr, 'A:\');
+
+        dword:=GetLogicalDrives();
+
+        for letter:='A' to 'Z' do
+        begin
+            if GetBit(dword,i)=True then
+            begin
+                { get drive type }
+                dr[0]:=char(ord('A')+i);
+                dt:=GetDriveType(dr);
+                shortname:='(DRIVE) '+letter+':\ ('+WindowsDriveType(dt)+')';
+                Result.Add( shortname );
+            end;
+            inc(i);
+        end;
+    {$endif}
+end;
 
 { update FileListBox with directory list of current directory }
 Procedure ListDirectory();
 var
-    list, flist, dirlist : TStringList;
-    st, shortname        : String;
+    list, templist : TStringList;
+    st, shortname  : String;
 begin
     fullpath:=GetCurrentDir();
 
-    dirlist:=TStringList.Create();
-    list := FindAllDirectories(fullpath, false {don't search in subdirectory});
+    { list drives }
+    list := GetDriveLetters();
+    if (list.Count > 0) then
+    begin
+        { add spacer }
+        list.Add('----');
+    end;
+
+    { add PARENT (..) to list of directories and drives }
+    list.Add( 'PARENT (..)' );
+
+    { list directories }
+    templist := FindAllDirectories(fullpath, false {don't search in subdirectory});
+    templist.Sort;
     { strip full path off and prepend "(DIR) " }
-    for st in list do
+    for st in templist do
     begin
         shortname:=ExtractFileName(st);
         shortname:='(DIR) '+shortname;
-        dirlist.Add( shortname );
+        list.Add( shortname );
     end;
-    list.Free;
-    dirlist.Sort;
+    templist.Free;
 
-    { prepend PARENT (..) to list of directories }
-    dirlist.Insert( 0, 'PARENT (..)' );
-
-    flist:=TStringList.Create();
-    list := FindAllFiles(fullpath, '*.jpg', false {don't search in subdirectory});
+    { list files }
+    templist:=TStringList.Create();
+    templist := FindAllFiles(fullpath, '*.jpg', false {don't search in subdirectory});
+    templist.Sort;
+    if (templist.Count > 0) then
+    begin
+        { add spacer }
+        {list.Add('----'+IntToStr(templist.Count));}
+        list.Add('----');
+    end;
     { strip full path off }
-    for st in list do
+    for st in templist do
     begin
         shortname:=ExtractFileName(st);
-        flist.Add( shortname );
+        list.Add( shortname );
     end;
+    templist.Free;
+
+    mainform.FileListBox.Items := list;
     list.Free;
-    flist.Sort;
 
-    for st in flist do
-    begin
-        dirlist.Add( st )
-    end;
-    flist.Free;
-
-    mainform.FileListBox.Items := dirlist;
-    dirlist.Free;
-
-    { update the filelabel }
-    MainForm.FileLabel.Caption:=fullpath;
+    { update the filelabel with the path }
+    MainForm.FileNameLabel.Caption:=fullpath;
 end;
 
 procedure TMainForm.FormActivate(Sender: TObject);
 begin
-  Mainform.Caption:='LPIX v5.1 - by Wayne Lockie Nov 17, 2020';
+  Mainform.Caption:='LPIX v5.5 - by Wayne Lockie Nov 22, 2020 (https://github.com/bjlockie/pix)';
   ListDirectory();
 end;
 
+procedure ChangeDir( dirname : String );
+begin
+    try
+        ChDir( dirname );
+    except
+        ShowMessage('Can''t change to '''+dirname+'''');
+    end;
+end;
 
 procedure TMainForm.FileListBoxClick(Sender: TObject);
 var
@@ -150,10 +248,12 @@ begin
         Reply := Application.MessageBox('Save changes?                ', 'Save changes', BoxStyle);
         if Reply = IDYES then
         begin
-             SaveEdits(key);
+            SaveEdits(key);
         end;
-        SaveButton.visible:=false;
     end;
+
+    HideEditBoxes();
+    SaveButton.visible:=False;
 
     { selected item, short filname (no path) }
     fnamekey:=FileListBox.ItemIndex;
@@ -161,75 +261,104 @@ begin
     begin
         fname:=FileListBox.Items[fnamekey];
 
-        fullpath:=GetCurrentDir();
-
-        if AnsiStartsStr( 'PARENT (..)', fname ) then
+        if AnsiStartsStr( '----', fname ) then
         begin
-            parentDirPath := ExtractFilePath(ExcludeTrailingPathDelimiter(fullpath));
-            { change to parent directory }
-            ChDir( parentDirPath );
-
-            ListDirectory();
-        end
-        else if AnsiStartsStr( '(DIR) ', fname ) then
-        begin
-            { remove "(DIR) " from fname }
-            fname:=RightStr(fname,Length(fname)-6);
-
-            { long filename (including path) }
-            longfname:=AppendPathDelim(fullpath)+fname;
-
-            { a directory has been selected }
-            ChDir( longfname );
-
-            ListDirectory();
+            { do nothing on spacer }
         end
         else
         begin
-            { long filename (including path) }
-            longfname:=AppendPathDelim(fullpath)+fname;
+            fullpath:=GetCurrentDir();
 
-            FileDataNameLabel.Caption:=longfname;
+            if AnsiStartsStr( '(DRIVE) ', fname ) then
+            begin
+                { extract drive letter (eg. C:\) from fname }
+                fname:=MidStr(fname,9,3);
+                {Reply := Application.MessageBox('Save changes?                ', PChar(fname), BoxStyle);}
+                {$ifdef Windows}
+                ChangeDir(fname);
+                ListDirectory();
+                {$endif}
+            end
+            else if AnsiStartsStr( 'PARENT (..)', fname ) then
+            begin
+                parentDirPath := ExtractFilePath(ExcludeTrailingPathDelimiter(fullpath));
+                { change to parent directory }
+                ChangeDir( parentDirPath );
 
-            picbox.Picture.LoadFromFile(longfname);
-            WhenBox.text:='';
-            Whobox.text:='';
-            WhereBox.text:='';
-            key:=copy(longfname,1,length(longfname)-4)+'.txt';
-            FileDataNameLabel.caption:='['+key+']';
-            WhenBox.Visible:=True;
-            WhenLabel.Visible :=True;
-            WhoBox.visible:=True;
-            WhoLabel.Visible:=True;
-            WhereBox.Visible:=True;
-            WhereBox.Visible:=True;
-            WhereLabel.Visible:=True;
+                ListDirectory();
+            end
+            else if AnsiStartsStr( '(DIR) ', fname ) then
+            begin
+                { remove "(DIR) " from fname }
+                fname:=RightStr(fname,Length(fname)-6);
 
-            ShowComments(key);
+                { long filename (including path) }
+                longfname:=AppendPathDelim(fullpath)+fname;
+
+                { a directory has been selected }
+                ChangeDir( longfname );
+
+                ListDirectory();
+            end
+            else
+            begin
+                { show all the edit boxes }
+                ShowEditBoxes();
+
+                { long filename (including path) }
+                longfname:=AppendPathDelim(fullpath)+fname;
+
+                PicBox.Picture.LoadFromFile(longfname);
+                WhenBox.text:='';
+                WhoBox.text:='';
+                WhereBox.text:='';
+                key:=copy(longfname,1,length(longfname)-4)+'.txt';
+
+                { update the filelabel with the path }
+                FileNameLabel.Caption:=longfname;
+
+                { update the data filename label }
+                FileNameDataLabel.Caption:='['+key+']';
+
+                ShowComments(key);
+            end;
         end;
     end;
 end;
 
 procedure TMainForm.WhenBoxEnter(Sender: TObject);
 begin
-  SaveButton.visible:=true;
+    SaveButton.visible:=true;
+    CancelButton.visible:=true;
 end;
 
 procedure TMainForm.WhereBoxEnter(Sender: TObject);
 begin
   SaveButton.visible:=true;
+  CancelButton.visible:=true;
 end;
 
 procedure TMainForm.WhoBoxEnter(Sender: TObject);
 begin
   SaveButton.visible:=true;
+  CancelButton.visible:=true;
 end;
 
 procedure TMainForm.SaveButtonClick(Sender: TObject);
 (* Save edited comments *)
 begin
-  SaveEdits(key);
-  SaveButton.visible:=false;
+    SaveEdits(key);
+    HideEditBoxes();
+    SaveButton.Visible:=False;
+    CancelButton.Visible:=False;
+end;
+
+procedure TMainForm.CancelButtonClick(Sender: TObject);
+(* cancel edited comments *)
+begin
+    HideEditBoxes();
+    SaveButton.Visible:=False;
+    CancelButton.Visible:=False;
 end;
 
 

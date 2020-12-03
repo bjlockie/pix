@@ -1,11 +1,11 @@
 object MainForm: TMainForm
-  Left = 795
-  Height = 783
-  Top = 198
-  Width = 901
+  Left = 517
+  Height = 358
+  Top = 173
+  Width = 412
   Caption = 'PIX'
-  ClientHeight = 783
-  ClientWidth = 901
+  ClientHeight = 358
+  ClientWidth = 412
   Color = clMoneyGreen
   DesignTimePPI = 75
   Font.CharSet = ANSI_CHARSET
@@ -17,220 +17,305 @@ object MainForm: TMainForm
   Font.Style = [fsBold, fsItalic]
   OnActivate = FormActivate
   LCLVersion = '2.0.6.0'
-  object FileListBox: TListBox
+  object PairSplitter1: TPairSplitter
     Left = 0
-    Height = 783
-    Top = 0
-    Width = 204
-    Align = alLeft
-    Font.CharSet = ANSI_CHARSET
-    Font.Color = clBlack
-    Font.Height = -9
-    Font.Name = 'Segoe UI'
-    Font.Pitch = fpVariable
-    Font.Quality = fqDraft
-    Font.Style = [fsBold, fsItalic]
-    ItemHeight = 0
-    OnClick = FileListBoxClick
-    ParentFont = False
-    TabOrder = 0
-  end
-  object FileDataNameLabel: TLabel
-    Left = 204
-    Height = 12
-    Top = 648
-    Width = 692
-    Anchors = [akLeft, akBottom]
-    AutoSize = False
-    Color = clDefault
-    Font.CharSet = ANSI_CHARSET
-    Font.Color = clBlack
-    Font.Height = -9
-    Font.Name = 'Segoe UI'
-    Font.Pitch = fpVariable
-    Font.Quality = fqDraft
-    Font.Style = [fsBold, fsItalic]
-    ParentColor = False
-    ParentFont = False
-    Transparent = False
-  end
-  object WhoBox: TEdit
-    Left = 256
-    Height = 41
-    Top = 706
-    Width = 605
-    Anchors = [akLeft, akRight, akBottom]
-    AutoSize = False
-    Font.CharSet = ANSI_CHARSET
-    Font.Color = clBlack
-    Font.Height = -9
-    Font.Name = 'Segoe UI'
-    Font.Pitch = fpVariable
-    Font.Quality = fqDraft
-    Font.Style = [fsBold]
-    OnEnter = WhoBoxEnter
-    ParentFont = False
-    TabOrder = 1
-    Text = 'WhoBox'
-    Visible = False
-  end
-  object WhereBox: TEdit
-    Left = 256
-    Height = 41
-    Top = 744
-    Width = 605
-    Anchors = [akLeft, akRight, akBottom]
-    AutoSize = False
-    Color = 15662776
-    Font.CharSet = ANSI_CHARSET
-    Font.Color = clBlack
-    Font.Height = -9
-    Font.Name = 'Segoe UI'
-    Font.Pitch = fpVariable
-    Font.Quality = fqDraft
-    Font.Style = [fsBold]
-    OnEnter = WhereBoxEnter
-    ParentFont = False
-    TabOrder = 2
-    Text = 'WhereBox'
-    Visible = False
-  end
-  object WhenLabel: TLabel
-    Left = 201
-    Height = 41
-    Top = 666
-    Width = 52
-    Alignment = taCenter
-    Anchors = [akLeft, akBottom]
-    AutoSize = False
-    Caption = 'WHEN TAKEN'
-    Color = 8454143
-    Font.CharSet = ANSI_CHARSET
-    Font.Color = clBlack
-    Font.Height = -9
-    Font.Name = 'Segoe UI'
-    Font.Pitch = fpVariable
-    Font.Quality = fqDraft
-    Font.Style = [fsBold, fsItalic]
-    ParentColor = False
-    ParentFont = False
-    Transparent = False
-    Visible = False
-    WordWrap = True
-  end
-  object WhoLabel: TLabel
-    Left = 201
-    Height = 41
-    Top = 706
-    Width = 52
-    Alignment = taCenter
-    Anchors = [akLeft, akBottom]
-    AutoSize = False
-    Caption = 'WHO / WHAT'
-    Color = clWhite
-    Font.CharSet = ANSI_CHARSET
-    Font.Color = clBlack
-    Font.Height = -9
-    Font.Name = 'Segoe UI'
-    Font.Pitch = fpVariable
-    Font.Quality = fqDraft
-    Font.Style = [fsBold, fsItalic]
-    ParentColor = False
-    ParentFont = False
-    Transparent = False
-    Visible = False
-    WordWrap = True
-  end
-  object WhereLabel: TLabel
-    Left = 201
-    Height = 41
-    Top = 746
-    Width = 52
-    Alignment = taCenter
-    Anchors = [akLeft, akBottom]
-    AutoSize = False
-    Caption = 'WHERE'
-    Color = 15662776
-    Font.CharSet = ANSI_CHARSET
-    Font.Color = clBlack
-    Font.Height = -9
-    Font.Name = 'Segoe UI'
-    Font.Pitch = fpVariable
-    Font.Quality = fqDraft
-    Font.Style = [fsBold, fsItalic]
-    ParentColor = False
-    ParentFont = False
-    Transparent = False
-    Visible = False
-    WordWrap = True
-  end
-  object SaveButton: TButton
-    Left = 861
-    Height = 95
-    Top = 664
-    Width = 40
-    Anchors = [akRight, akBottom]
-    Caption = 'Save'
-    Color = clGreen
-    OnClick = SaveButtonClick
-    TabOrder = 3
-    Visible = False
-  end
-  object DisplayPanel: TPanel
-    Left = 204
-    Height = 616
-    Top = 24
-    Width = 697
+    Height = 349
+    Top = 1
+    Width = 410
     Anchors = [akTop, akLeft, akRight, akBottom]
-    ClientHeight = 616
-    ClientWidth = 697
-    TabOrder = 4
-    object PicBox: TImage
-      Left = 1
-      Height = 614
-      Top = 1
-      Width = 695
-      Align = alBottom
-      Proportional = True
+    Position = 138
+    object PairSplitterSide1: TPairSplitterSide
+      Cursor = crArrow
+      Left = 0
+      Height = 349
+      Top = 0
+      Width = 138
+      ClientWidth = 138
+      ClientHeight = 349
+      object FileListBox: TListBox
+        Left = 0
+        Height = 349
+        Top = 0
+        Width = 138
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Segoe UI'
+        Font.Pitch = fpVariable
+        Font.Quality = fqDraft
+        Font.Style = [fsBold, fsItalic]
+        ItemHeight = 0
+        OnClick = FileListBoxClick
+        ParentFont = False
+        TabOrder = 0
+      end
     end
-  end
-  object FileLabel: TLabel
-    Left = 208
-    Height = 12
-    Top = 8
-    Width = 688
-    AutoSize = False
-    Color = clLime
-    Font.CharSet = ANSI_CHARSET
-    Font.Color = clBlack
-    Font.Height = -9
-    Font.Name = 'Segoe UI'
-    Font.Pitch = fpVariable
-    Font.Quality = fqDraft
-    Font.Style = [fsBold, fsItalic]
-    ParentColor = False
-    ParentFont = False
-    Transparent = False
-  end
-  object WhenBox: TEdit
-    Left = 256
-    Height = 41
-    Top = 666
-    Width = 605
-    Anchors = [akLeft, akRight, akBottom]
-    AutoSize = False
-    Color = 8454143
-    Font.CharSet = ANSI_CHARSET
-    Font.Color = clBlack
-    Font.Height = -9
-    Font.Name = 'Segoe UI'
-    Font.Pitch = fpVariable
-    Font.Quality = fqDraft
-    Font.Style = [fsBold]
-    OnEnter = WhenBoxEnter
-    ParentFont = False
-    TabOrder = 5
-    Text = 'WhenBox'
-    Visible = False
+    object PairSplitterSide2: TPairSplitterSide
+      Cursor = crArrow
+      Left = 141
+      Height = 349
+      Top = 0
+      Width = 269
+      ClientWidth = 269
+      ClientHeight = 349
+      object Panel1: TPanel
+        Left = 0
+        Height = 349
+        Top = 0
+        Width = 269
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        Caption = 'Panel1'
+        ClientHeight = 349
+        ClientWidth = 269
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -9
+        Font.Name = 'Segoe UI'
+        Font.Pitch = fpVariable
+        Font.Quality = fqDraft
+        Font.Style = [fsBold, fsItalic]
+        ParentFont = False
+        TabOrder = 0
+        object FileNameDataLabel: TLabel
+          Left = 1
+          Height = 12
+          Top = 228
+          Width = 269
+          Anchors = [akLeft, akRight, akBottom]
+          AutoSize = False
+          Color = clDefault
+          Font.CharSet = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Segoe UI'
+          Font.Pitch = fpVariable
+          Font.Quality = fqDraft
+          Font.Style = [fsBold, fsItalic]
+          ParentColor = False
+          ParentFont = False
+          Transparent = False
+        end
+        object WhoBox: TEdit
+          Left = 55
+          Height = 34
+          Top = 279
+          Width = 176
+          Anchors = [akLeft, akRight, akBottom]
+          AutoSize = False
+          Font.CharSet = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Segoe UI'
+          Font.Pitch = fpVariable
+          Font.Quality = fqDraft
+          Font.Style = [fsBold]
+          OnEnter = WhoBoxEnter
+          ParentFont = False
+          TabOrder = 0
+          Text = 'WhoBox'
+          Visible = False
+        end
+        object WhereBox: TEdit
+          Left = 55
+          Height = 34
+          Top = 316
+          Width = 176
+          Anchors = [akLeft, akRight, akBottom]
+          AutoSize = False
+          Color = 15662776
+          Font.CharSet = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Segoe UI'
+          Font.Pitch = fpVariable
+          Font.Quality = fqDraft
+          Font.Style = [fsBold]
+          OnEnter = WhereBoxEnter
+          ParentFont = False
+          TabOrder = 1
+          Text = 'WhereBox'
+          Visible = False
+        end
+        object WhoLabel: TLabel
+          Left = 1
+          Height = 34
+          Top = 279
+          Width = 52
+          Alignment = taCenter
+          Anchors = [akLeft, akBottom]
+          AutoSize = False
+          Caption = 'WHO / WHAT'
+          Color = clWhite
+          Font.CharSet = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Segoe UI'
+          Font.Pitch = fpVariable
+          Font.Quality = fqDraft
+          Font.Style = [fsBold, fsItalic]
+          Layout = tlCenter
+          ParentColor = False
+          ParentFont = False
+          Transparent = False
+          Visible = False
+          WordWrap = True
+        end
+        object WhereLabel: TLabel
+          Left = 1
+          Height = 34
+          Top = 316
+          Width = 52
+          Alignment = taCenter
+          Anchors = [akLeft, akBottom]
+          AutoSize = False
+          Caption = 'WHERE'
+          Color = 15662776
+          Font.CharSet = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Segoe UI'
+          Font.Pitch = fpVariable
+          Font.Quality = fqDraft
+          Font.Style = [fsBold, fsItalic]
+          Layout = tlCenter
+          ParentColor = False
+          ParentFont = False
+          Transparent = False
+          Visible = False
+          WordWrap = True
+        end
+        object DisplayPanel: TPanel
+          Left = 1
+          Height = 216
+          Top = 11
+          Width = 269
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          ClientHeight = 216
+          ClientWidth = 269
+          Font.CharSet = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Segoe UI'
+          Font.Pitch = fpVariable
+          Font.Quality = fqDraft
+          Font.Style = [fsBold, fsItalic]
+          ParentFont = False
+          TabOrder = 2
+          object PicBox: TImage
+            Left = 1
+            Height = 214
+            Top = 1
+            Width = 267
+            Anchors = [akTop, akLeft, akRight, akBottom]
+            Proportional = True
+          end
+        end
+        object SaveButton: TButton
+          Left = 231
+          Height = 48
+          Top = 243
+          Width = 40
+          Anchors = [akRight, akBottom]
+          Caption = 'Save'
+          Color = clGreen
+          Font.CharSet = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Segoe UI'
+          Font.Pitch = fpVariable
+          Font.Quality = fqDraft
+          Font.Style = [fsBold, fsItalic]
+          OnClick = SaveButtonClick
+          ParentFont = False
+          TabOrder = 3
+          Visible = False
+        end
+        object WhenLabel: TLabel
+          Left = 1
+          Height = 34
+          Top = 243
+          Width = 52
+          Alignment = taCenter
+          Anchors = [akLeft, akBottom]
+          AutoSize = False
+          Caption = 'WHEN TAKEN'
+          Color = 8454143
+          Font.CharSet = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Segoe UI'
+          Font.Pitch = fpVariable
+          Font.Quality = fqDraft
+          Font.Style = [fsBold, fsItalic]
+          Layout = tlCenter
+          ParentColor = False
+          ParentFont = False
+          Transparent = False
+          Visible = False
+          WordWrap = True
+        end
+        object WhenBox: TEdit
+          Left = 55
+          Height = 34
+          Top = 243
+          Width = 176
+          Anchors = [akLeft, akRight, akBottom]
+          AutoSize = False
+          Color = 8454143
+          Font.CharSet = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Segoe UI'
+          Font.Pitch = fpVariable
+          Font.Quality = fqDraft
+          Font.Style = [fsBold]
+          OnEnter = WhenBoxEnter
+          ParentFont = False
+          TabOrder = 4
+          Text = 'WhenBox'
+          Visible = False
+        end
+        object FileNameLabel: TLabel
+          Left = 1
+          Height = 12
+          Top = 1
+          Width = 269
+          Anchors = [akTop, akLeft, akRight]
+          AutoSize = False
+          Color = clLime
+          Font.CharSet = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Segoe UI'
+          Font.Pitch = fpVariable
+          Font.Quality = fqDraft
+          Font.Style = [fsBold, fsItalic]
+          ParentColor = False
+          ParentFont = False
+          Transparent = False
+        end
+        object CancelButton: TButton
+          Left = 230
+          Height = 48
+          Top = 301
+          Width = 40
+          Anchors = [akRight, akBottom]
+          Caption = 'Cancel'
+          Color = clGreen
+          Font.CharSet = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -9
+          Font.Name = 'Segoe UI'
+          Font.Pitch = fpVariable
+          Font.Quality = fqDraft
+          Font.Style = [fsBold, fsItalic]
+          OnClick = CancelButtonClick
+          ParentFont = False
+          TabOrder = 5
+          Visible = False
+        end
+      end
+    end
   end
 end
