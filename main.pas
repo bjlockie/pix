@@ -39,8 +39,11 @@ type
     procedure FileListBoxClick(Sender: TObject);
     procedure SaveButtonClick(Sender: TObject);
     procedure CancelButtonClick(Sender: TObject);
+    procedure WhenBoxDblClick(Sender: TObject);
     procedure WhenBoxEnter(Sender: TObject);
+    procedure WhereBoxDblClick(Sender: TObject);
     procedure WhereBoxEnter(Sender: TObject);
+    procedure WhoBoxDblClick(Sender: TObject);
     procedure WhoBoxEnter(Sender: TObject);
   private
 
@@ -54,6 +57,9 @@ var
   fname      : string;    { short name excluding path }
   key        : string;    { longfname changed to .txt }
   fullpath   : string;
+  lastdate,
+  lastwho,
+  lastwhere  : string;    (* always save last entered *)
 
 
 implementation
@@ -222,8 +228,11 @@ end;
 
 procedure TMainForm.FormActivate(Sender: TObject);
 begin
-  Mainform.Caption:='LPIX v5.6 - by Wayne Lockie Nov 22, 2020 (https://github.com/bjlockie/pix)';
+  Mainform.Caption:='LPIX v5.7 - by Wayne Lockie Dec 2, 2020 (https://github.com/bjlockie/pix)';
   ListDirectory();
+  lastdate:='';
+  lastwho:='';
+  lastwhere:='';
 end;
 
 procedure ChangeDir( dirname : String );
@@ -342,23 +351,42 @@ procedure TMainForm.WhenBoxEnter(Sender: TObject);
 begin
     SaveButton.visible:=true;
     CancelButton.visible:=true;
+    if length(lastdate)>0 then Whenbox.ShowHint:=True
+    else Whenbox.ShowHint:=False;
+end;
+
+procedure TMainForm.WhereBoxDblClick(Sender: TObject);
+begin
+  if length(lastwhere)>0 then wherebox.text:=lastwhere;
 end;
 
 procedure TMainForm.WhereBoxEnter(Sender: TObject);
 begin
   SaveButton.visible:=true;
   CancelButton.visible:=true;
+  if length(lastwhere)>0 then Wherebox.ShowHint:=True
+    else Wherebox.ShowHint:=False;
+end;
+
+procedure TMainForm.WhoBoxDblClick(Sender: TObject);
+begin
+  if length(lastwho)>0 then whobox.text:=lastwho;
 end;
 
 procedure TMainForm.WhoBoxEnter(Sender: TObject);
 begin
   SaveButton.visible:=true;
   CancelButton.visible:=true;
+  if length(lastwho)>0 then Whobox.ShowHint:=true
+    else Whobox.ShowHint:=False;
 end;
 
 procedure TMainForm.SaveButtonClick(Sender: TObject);
 (* Save edited comments *)
 begin
+    lastdate:= whenbox.Text;
+    lastwho:=whobox.text;
+    lastwhere:=wherebox.text;
     SaveEdits(key);
     SaveButton.Visible:=False;
     CancelButton.Visible:=False;
@@ -369,6 +397,11 @@ procedure TMainForm.CancelButtonClick(Sender: TObject);
 begin
     SaveButton.Visible:=False;
     CancelButton.Visible:=False;
+end;
+
+procedure TMainForm.WhenBoxDblClick(Sender: TObject);
+begin
+  if length(lastdate)>0 then whenbox.text:=lastdate;
 end;
 
 

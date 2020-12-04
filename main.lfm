@@ -112,9 +112,13 @@ object MainForm: TMainForm
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
           Font.Style = [fsBold]
+          OnDblClick = WhoBoxDblClick
           OnEnter = WhoBoxEnter
           ParentFont = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 0
+          TextHint = 'DblClk for copy'
           Visible = False
         end
         object WhereBox: TEdit
@@ -132,9 +136,13 @@ object MainForm: TMainForm
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
           Font.Style = [fsBold]
+          OnDblClick = WhereBoxDblClick
           OnEnter = WhereBoxEnter
           ParentFont = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 1
+          TextHint = 'DblClk for copy'
           Visible = False
         end
         object WhoLabel: TLabel
@@ -218,9 +226,9 @@ object MainForm: TMainForm
           Width = 51
           Anchors = [akRight, akBottom]
           Caption = 'Save'
-          Color = clGreen
+          Color = 3912763
           Font.CharSet = ANSI_CHARSET
-          Font.Color = clBlack
+          Font.Color = clBlue
           Font.Height = -12
           Font.Name = 'Segoe UI'
           Font.Pitch = fpVariable
@@ -270,9 +278,13 @@ object MainForm: TMainForm
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
           Font.Style = [fsBold]
+          OnDblClick = WhenBoxDblClick
           OnEnter = WhenBoxEnter
           ParentFont = False
+          ParentShowHint = False
+          ShowHint = True
           TabOrder = 4
+          TextHint = 'DblClk for copy'
           Visible = False
         end
         object FileNameLabel: TLabel
@@ -301,9 +313,9 @@ object MainForm: TMainForm
           Width = 51
           Anchors = [akRight, akBottom]
           Caption = 'Cancel'
-          Color = clGreen
+          Color = 5197801
           Font.CharSet = ANSI_CHARSET
-          Font.Color = clBlack
+          Font.Color = clWhite
           Font.Height = -12
           Font.Name = 'Segoe UI'
           Font.Pitch = fpVariable
