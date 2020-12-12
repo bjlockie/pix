@@ -226,9 +226,9 @@ object MainForm: TMainForm
           Width = 51
           Anchors = [akRight, akBottom]
           Caption = 'Save'
-          Color = 3912763
+          Color = clLime
           Font.CharSet = ANSI_CHARSET
-          Font.Color = clBlue
+          Font.Color = clNavy
           Font.Height = -12
           Font.Name = 'Segoe UI'
           Font.Pitch = fpVariable
@@ -313,9 +313,9 @@ object MainForm: TMainForm
           Width = 51
           Anchors = [akRight, akBottom]
           Caption = 'Cancel'
-          Color = 5197801
+          Color = clRed
           Font.CharSet = ANSI_CHARSET
-          Font.Color = clWhite
+          Font.Color = clYellow
           Font.Height = -12
           Font.Name = 'Segoe UI'
           Font.Pitch = fpVariable

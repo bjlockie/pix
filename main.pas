@@ -118,6 +118,9 @@ begin
   writeln(f, mainform.whobox.Text);
   writeln(f, mainform.wherebox.Text);
   close(f);
+  lastdate:= mainform.whenbox.Text;
+  lastwho:=mainform.whobox.text;
+  lastwhere:=mainform.wherebox.text;
 end;
 
 function GetBit(Value: QWord; Index: Byte): Boolean;
@@ -228,7 +231,7 @@ end;
 
 procedure TMainForm.FormActivate(Sender: TObject);
 begin
-  Mainform.Caption:='LPIX v5.7 - by Wayne Lockie Dec 2, 2020 (https://github.com/bjlockie/pix)';
+  Mainform.Caption:='LPIX v5.7a - by Wayne Lockie Dec 10, 2020 (https://github.com/bjlockie/pix)';
   ListDirectory();
   lastdate:='';
   lastwho:='';
