@@ -1,11 +1,11 @@
 object MainForm: TMainForm
   Left = 517
-  Height = 458
+  Height = 624
   Top = 173
-  Width = 527
+  Width = 709
   Caption = 'PIX'
-  ClientHeight = 458
-  ClientWidth = 527
+  ClientHeight = 624
+  ClientWidth = 709
   Color = clMoneyGreen
   Font.CharSet = ANSI_CHARSET
   Font.Color = clBlack
@@ -18,22 +18,22 @@ object MainForm: TMainForm
   LCLVersion = '2.0.6.0'
   object PairSplitter1: TPairSplitter
     Left = 0
-    Height = 447
+    Height = 613
     Top = 1
-    Width = 524
+    Width = 706
     Anchors = [akTop, akLeft, akRight, akBottom]
     Position = 177
     object PairSplitterSide1: TPairSplitterSide
       Cursor = crArrow
       Left = 0
-      Height = 447
+      Height = 613
       Top = 0
       Width = 177
       ClientWidth = 177
-      ClientHeight = 447
+      ClientHeight = 613
       object FileListBox: TListBox
         Left = 0
-        Height = 447
+        Height = 613
         Top = 0
         Width = 177
         Anchors = [akTop, akLeft, akRight, akBottom]
@@ -49,26 +49,25 @@ object MainForm: TMainForm
         ParentFont = False
         ScrollWidth = 173
         TabOrder = 0
-        TopIndex = -1
       end
     end
     object PairSplitterSide2: TPairSplitterSide
       Cursor = crArrow
       Left = 182
-      Height = 447
+      Height = 613
       Top = 0
-      Width = 342
-      ClientWidth = 342
-      ClientHeight = 447
+      Width = 524
+      ClientWidth = 524
+      ClientHeight = 613
       object Panel1: TPanel
         Left = 0
-        Height = 447
+        Height = 613
         Top = 0
-        Width = 342
+        Width = 524
         Anchors = [akTop, akLeft, akRight, akBottom]
         Caption = 'Panel1'
-        ClientHeight = 447
-        ClientWidth = 342
+        ClientHeight = 613
+        ClientWidth = 524
         Font.CharSet = ANSI_CHARSET
         Font.Color = clBlack
         Font.Height = -12
@@ -81,8 +80,8 @@ object MainForm: TMainForm
         object FileNameDataLabel: TLabel
           Left = 1
           Height = 15
-          Top = 292
-          Width = 342
+          Top = 458
+          Width = 524
           Anchors = [akLeft, akRight, akBottom]
           AutoSize = False
           Color = clDefault
@@ -101,8 +100,8 @@ object MainForm: TMainForm
         object WhoBox: TEdit
           Left = 70
           Height = 44
-          Top = 357
-          Width = 223
+          Top = 523
+          Width = 405
           Anchors = [akLeft, akRight, akBottom]
           AutoSize = False
           Font.CharSet = ANSI_CHARSET
@@ -124,8 +123,8 @@ object MainForm: TMainForm
         object WhereBox: TEdit
           Left = 70
           Height = 44
-          Top = 404
-          Width = 223
+          Top = 570
+          Width = 405
           Anchors = [akLeft, akRight, akBottom]
           AutoSize = False
           Color = 15662776
@@ -148,7 +147,7 @@ object MainForm: TMainForm
         object WhoLabel: TLabel
           Left = 1
           Height = 44
-          Top = 357
+          Top = 523
           Width = 67
           Alignment = taCenter
           Anchors = [akLeft, akBottom]
@@ -172,7 +171,7 @@ object MainForm: TMainForm
         object WhereLabel: TLabel
           Left = 1
           Height = 44
-          Top = 404
+          Top = 570
           Width = 67
           Alignment = taCenter
           Anchors = [akLeft, akBottom]
@@ -195,12 +194,12 @@ object MainForm: TMainForm
         end
         object DisplayPanel: TPanel
           Left = 1
-          Height = 277
+          Height = 443
           Top = 14
-          Width = 342
+          Width = 524
           Anchors = [akTop, akLeft, akRight, akBottom]
-          ClientHeight = 277
-          ClientWidth = 342
+          ClientHeight = 443
+          ClientWidth = 524
           Font.CharSet = ANSI_CHARSET
           Font.Color = clBlack
           Font.Height = -12
@@ -212,37 +211,17 @@ object MainForm: TMainForm
           TabOrder = 2
           object PicBox: TImage
             Left = 1
-            Height = 275
+            Height = 441
             Top = 1
-            Width = 340
+            Width = 522
             Anchors = [akTop, akLeft, akRight, akBottom]
             Proportional = True
           end
         end
-        object SaveButton: TButton
-          Left = 294
-          Height = 61
-          Top = 312
-          Width = 51
-          Anchors = [akRight, akBottom]
-          Caption = 'Save'
-          Color = clLime
-          Font.CharSet = ANSI_CHARSET
-          Font.Color = clNavy
-          Font.Height = -12
-          Font.Name = 'Segoe UI'
-          Font.Pitch = fpVariable
-          Font.Quality = fqDraft
-          Font.Style = [fsBold, fsItalic]
-          OnClick = SaveButtonClick
-          ParentFont = False
-          TabOrder = 3
-          Visible = False
-        end
         object WhenLabel: TLabel
           Left = 1
           Height = 44
-          Top = 311
+          Top = 477
           Width = 67
           Alignment = taCenter
           Anchors = [akLeft, akBottom]
@@ -266,8 +245,8 @@ object MainForm: TMainForm
         object WhenBox: TEdit
           Left = 70
           Height = 44
-          Top = 311
-          Width = 223
+          Top = 477
+          Width = 405
           Anchors = [akLeft, akRight, akBottom]
           AutoSize = False
           Color = 8454143
@@ -283,7 +262,7 @@ object MainForm: TMainForm
           ParentFont = False
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 4
+          TabOrder = 3
           TextHint = 'DblClk for copy'
           Visible = False
         end
@@ -291,7 +270,7 @@ object MainForm: TMainForm
           Left = 3
           Height = 15
           Top = 1
-          Width = 342
+          Width = 524
           Anchors = [akTop, akLeft, akRight]
           AutoSize = False
           Color = clLime
@@ -306,22 +285,45 @@ object MainForm: TMainForm
           ParentFont = False
           Transparent = False
         end
-        object CancelButton: TButton
-          Left = 292
-          Height = 61
-          Top = 386
-          Width = 51
+        object SaveButton: TPanel
+          Left = 476
+          Height = 46
+          Top = 488
+          Width = 46
           Anchors = [akRight, akBottom]
-          Caption = 'Cancel'
+          BevelWidth = 3
+          Caption = 'SAVE'
+          Color = clLime
+          Font.CharSet = ANSI_CHARSET
+          Font.Color = clBlack
+          Font.Height = -16
+          Font.Name = 'Segoe UI'
+          Font.Pitch = fpVariable
+          Font.Quality = fqDraft
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          TabOrder = 4
+          Visible = False
+          OnClick = SaveButtonClick
+        end
+        object CancelButton: TPanel
+          Left = 476
+          Height = 46
+          Top = 552
+          Width = 46
+          Anchors = [akRight, akBottom]
+          BevelWidth = 3
+          Caption = 'CANCEL'
           Color = clRed
           Font.CharSet = ANSI_CHARSET
-          Font.Color = clYellow
+          Font.Color = clBlack
           Font.Height = -12
           Font.Name = 'Segoe UI'
           Font.Pitch = fpVariable
           Font.Quality = fqDraft
-          Font.Style = [fsBold, fsItalic]
-          OnClick = CancelButtonClick
+          Font.Style = [fsBold]
+          ParentColor = False
           ParentFont = False
           TabOrder = 5
           Visible = False

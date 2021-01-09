@@ -24,9 +24,9 @@ type
     PairSplitterSide1: TPairSplitterSide;
     PairSplitterSide2: TPairSplitterSide;
     Panel1: TPanel;
+    SaveButton: TPanel;
     PicBox: TImage;
-    SaveButton: TButton;
-    CancelButton: TButton;
+    CancelButton: TPanel;
     WhenBox: TEdit;
     WhenLabel: TLabel;
     WhereBox: TEdit;
@@ -231,7 +231,7 @@ end;
 
 procedure TMainForm.FormActivate(Sender: TObject);
 begin
-  Mainform.Caption:='LPIX v5.7a - by Wayne Lockie Dec 10, 2020 (https://github.com/bjlockie/pix)';
+  Mainform.Caption:='LPIX v5.7b - by Wayne Lockie Dec 31, 2020 (https://github.com/bjlockie/pix)';
   ListDirectory();
   lastdate:='';
   lastwho:='';
@@ -387,9 +387,6 @@ end;
 procedure TMainForm.SaveButtonClick(Sender: TObject);
 (* Save edited comments *)
 begin
-    lastdate:= whenbox.Text;
-    lastwho:=whobox.text;
-    lastwhere:=wherebox.text;
     SaveEdits(key);
     SaveButton.Visible:=False;
     CancelButton.Visible:=False;
